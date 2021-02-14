@@ -3,109 +3,185 @@
 }
 
 <div class="container">
-    <div class="col-md-7 machine">
-        <h3 style="text-align: center;">Lista de productos</h3>
-        <table style="text-align: center;">
+    <div class="col-md-8 ">
+        <div class="machine">
+            <h3 style="text-align: center;">List of products</h3>
+            <table style="text-align: center;">
+                <thead>
+                    <tr>
+                        <td><label>$0.50</label></td>
+                        <td><label>$1.50</label></td>
+                        <td><label>$0.55</label></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>  <img src="../../content/soda.png" width="70%" ></td>
+                        <td>  <img src="../../content/chocolate.png" width="50%"></td>
+                        <td> <img src="../../content/lays.png" width="70%"></td>
+                    </tr>
+                    <tr>
+                        <td><button class="btn bg-primary" onclick="order(1);">Order</button></td>
+                        <td> <button class="btn bg-primary" onclick="order(2);">Order</button></td>
+                        <td> <button class="btn bg-primary" onclick="order(3);">Order</button></td>
+
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6 details ">
+            <h3 style="text-align: center;">Dispatched Products</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Price</th>
+
+                    </tr>
+                </thead>
+                <tbody id="dproduct">
+                    <tr>
+                        <th scope="row" id="tdSoda">0</th>
+                        <td>Soda</td>
+                        <td>$0.50</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" id="tdCho">0</th>
+                        <td>Chocolate</td>
+                        <td>$1.50</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" id="tdLays">0</th>
+                        <td>Lays</td>
+                        <td>$0.55</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-5 preparing" style="text-align: center;">
+            <h3 style="text-align: center;">Preparing</h3>
+            <div class="loader" id="loader" style="text-align: center; display:none;">Loading...</div>
+            <div id="time" class="time">
+                <h4 id="lblTime"></h4>
+            </div>
+            <div id="dvimage" style="text-align: center; display:none;">
+                <img src="../../content/lays.png" hidden id="img">
+            </div>
+            <div id="second" class="label_time ">
+                <label id="lblSecond"></label>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 order">
+        <h3 style="text-align: center;">Your Order</h3>
+        <table class="table">
             <thead>
                 <tr>
-                    <td><label>$0.50</label></td>
-                    <td><label>$1.50</label></td>
-                    <td><label>$0.55</label></td>
+                    <th scope="col">#</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Price</th>
+
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>  <img src="../../content/soda.png" width="70%"></td>
-                    <td>  <img src="../../content/chocolate.png" width="50%"></td>
-                    <td> <img src="../../content/lays.png" width="70%"></td>
-                </tr>
-                <tr >
-
-                    <td><button class="btn bg-primary" onclick="order(1);">Orden</button></td>
-                    <td> <button class="btn bg-primary" onclick="order(2);">Orden</button></td>
-                    <td> <button class="btn bg-primary" onclick="order(3);">Orden</button></td>
+            <tbody id="tproduct">
+                <tr id="trTotal">
+                    <th scope="row">Total</th>
+                    <td></td>
+                    <td>0</td>
 
                 </tr>
-
             </tbody>
         </table>
-        
     </div>
 
-
-
-    <div class="col-md-4 order">
-        <h3 style="text-align: center;">Your Order</h3>
-        <label>Producto Precio</label>
-       
-        <div id="order">
-
-        </div>
-    </div>
-
-    <div class="col-md-5 details">
-        <h3 style="text-align: center;">Orden</h3>
-        
-    </div>
-    <div class="col-md-6 preparing">
-        <h3 style="text-align: center;">Preparing</h3>
-        <div id="time">
-            <h4 id="lblTime"></h4>
-        </div>
-    </div>
+ 
 </div>
-@section scripts{
+@section scripts{ 
+   
     <script>
     let counter = false;
-    let time=0,timer=0;
+    let time = 0, timer = 0;
+    let counterProduct = 0, total = 0;
+    let img;
+    let array = [0, 0, 0];
     function order(i) {
-      
-      
-        let order_1 = document.createElement("label");
-        var br = $("<br>")
-        let txt;
-       
+        $("#loader").attr("style", "display: none");
+        $("#trTotal").remove();
+        $("#img").remove();
+        $("#lblSecond").text("");      
+        let txtProduct;
+        let txtPrice;
+     
+        clearInterval(timer);
         switch (i) {
             case 1: {
-                txt = "Soda    -------->    $0.50 ";
+                txtProduct = "Soda";
+                txtPrice = 0.50;
                 time = 5
+                img = ("<img src=" + "../../content/soda.png width=" + "50% id=" + "img>");
+                array[0]++;
             };
                 break;
-            case 2: txt = "Chocolate -------> $1.50 ";
+            case 2: {
+                txtProduct = "Chocolate";
+                txtPrice = 1.50;
+                time = 8;
+                array[1]++;
+                img = ("<img src="+"../../content/chocolate.png width="+"70% id="+"img>");
+            }
                 break;
-            case 3: txt = "Lays     -------> $0.55 ";
+            case 3: {
+                txtProduct = "Lays";
+                txtPrice = 0.55;
+                time = 3;
+                array[2]++;
+                img = ("<img src="+"../../content/lays.png  width="+"45% id="+"img>");
+            }
                 break;
         }
-        order_1.appendChild(document.createTextNode(txt));
-        $("#order").append(order_1);
-        $("#order").append(br);
+        total += txtPrice;
+        counterProduct++;
+        let tr = $("<tr><th scope=" + "row" + ">" + counterProduct + "</th>  <td>" + txtProduct + "</td><td> $" + txtPrice.toFixed(2) + "</td> </tr>")
+        let trtotal = $("<tr id=" + "trTotal" + "><th scope=" + "row" + ">Total</th>  <td></td> <td>$" + total.toFixed(2) + "</td></tr>");
+        $("#tproduct").append(tr);
+        $("#tproduct").append(trtotal);
         counter = true;
         inteval();
-       
-           
+
+      
     }
     function timeCounter() {
-        console.log(time);
         let divTime = $("#time");
-        $("#lblTime").remove();
-        let lblTime = $("<h3  style="+"text-align:center; id=" + "lblTime" + " >" + time + "</h3 > ");
-        divTime.append(lblTime);
+        $("#lblTime").remove();   
+          
+        let lblTime = $("<h3  style=" + "text-align:center; id=" + "lblTime" + " >" + time + "</h3 > ");      
+        divTime.append(lblTime);          
+        $("#loader").attr("style", "display: block");
+        $("#lblSecond").text("Secs Left");    
         time--;
-        if (time == - 1 && counter == true) {          
+        if (time == - 1 && counter == true) {
             counter = false;
             clearInterval(timer);
-        }
-    }     
-           
-        
-            
-    function inteval() {
-         
-        if (counter === true) {
+          
+            $("#loader").attr("style", "display: none");
+            $("#lblTime").attr("style", "display: none");
+            $("#dvimage").attr("style", "display: block");
+            $("#dvimage").append(img);
+            $("#lblSecond").text("Finished!!");
+             $("#tdSoda").text(array[0]);
+            $("#tdCho").text(array[1]);
+            $("#tdLays").text(array[2]);
 
-            timer = setInterval(timeCounter, 1000);
-            console.log(counter)
+         
         }
-}
+    }
+
+    
+    function inteval() {
+        if (counter === true) timer = setInterval(timeCounter, 1000);
+        }
+
     </script>
 }
