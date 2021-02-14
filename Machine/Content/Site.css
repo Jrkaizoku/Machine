@@ -26,7 +26,32 @@ textarea {
 }
 
 .machine {
-    background-color:aqua;
-    padding:10px;
-    margin:10px;
+    background-color:#ffffff;
+    padding-bottom:20px;
+    padding-top:10px;
+    margin:20px;
+    border-radius:5px;
+}
+.order {
+    background-color: #ffffff;
+    padding-top: 0px;
+    margin-top: 20px;  
+    padding-left: 30px;
+    border-radius: 5px;
+}
+.details {
+    background-color: #ffffff;
+    
+    margin-left: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    border-radius: 5px;
+}
+.preparing {
+    background-color: #ffffff;
+  
+    margin-left: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    border-radius: 5px;
 }

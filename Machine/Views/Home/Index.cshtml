@@ -2,16 +2,110 @@
     ViewBag.Title = "Maquina";
 }
 
-    <div class="container machine">
-        <div class="col-md-7">
-            Hola
-        </div>
-        <div class="col-md-4"> como estas</div>
+<div class="container">
+    <div class="col-md-7 machine">
+        <h3 style="text-align: center;">Lista de productos</h3>
+        <table style="text-align: center;">
+            <thead>
+                <tr>
+                    <td><label>$0.50</label></td>
+                    <td><label>$1.50</label></td>
+                    <td><label>$0.55</label></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>  <img src="../../content/soda.png" width="70%"></td>
+                    <td>  <img src="../../content/chocolate.png" width="50%"></td>
+                    <td> <img src="../../content/lays.png" width="70%"></td>
+                </tr>
+                <tr >
 
-        <div class="col-md-6">
-            Hola
-        </div>
-        <div class="col-md-6"> como estas</div>
+                    <td><button class="btn bg-primary" onclick="order(1);">Orden</button></td>
+                    <td> <button class="btn bg-primary" onclick="order(2);">Orden</button></td>
+                    <td> <button class="btn bg-primary" onclick="order(3);">Orden</button></td>
 
+                </tr>
 
+            </tbody>
+        </table>
+        
     </div>
+
+
+
+    <div class="col-md-4 order">
+        <h3 style="text-align: center;">Your Order</h3>
+        <label>Producto Precio</label>
+       
+        <div id="order">
+
+        </div>
+    </div>
+
+    <div class="col-md-5 details">
+        <h3 style="text-align: center;">Orden</h3>
+        
+    </div>
+    <div class="col-md-6 preparing">
+        <h3 style="text-align: center;">Preparing</h3>
+        <div id="time">
+            <h4 id="lblTime"></h4>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+    let counter = false;
+    let time=0,timer=0;
+    function order(i) {
+      
+      
+        let order_1 = document.createElement("label");
+        var br = $("<br>")
+        let txt;
+       
+        switch (i) {
+            case 1: {
+                txt = "Soda    -------->    $0.50 ";
+                time = 5
+            };
+                break;
+            case 2: txt = "Chocolate -------> $1.50 ";
+                break;
+            case 3: txt = "Lays     -------> $0.55 ";
+                break;
+        }
+        order_1.appendChild(document.createTextNode(txt));
+        $("#order").append(order_1);
+        $("#order").append(br);
+        counter = true;
+        inteval();
+       
+           
+    }
+    function timeCounter() {
+        console.log(time);
+        let divTime = $("#time");
+        $("#lblTime").remove();
+        let lblTime = $("<h3  style="+"text-align:center; id=" + "lblTime" + " >" + time + "</h3 > ");
+        divTime.append(lblTime);
+        time--;
+        if (time == - 1 && counter == true) {          
+            counter = false;
+            clearInterval(timer);
+        }
+    }     
+           
+        
+            
+    function inteval() {
+         
+        if (counter === true) {
+
+            timer = setInterval(timeCounter, 1000);
+            console.log(counter)
+        }
+}
+    </script>
+}
